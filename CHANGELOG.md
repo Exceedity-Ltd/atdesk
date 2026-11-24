@@ -4,6 +4,95 @@ atdesk puts the Claude Code session already running in VS Code on your phone.
 Versions number the service. The VS Code extension takes a new number only when it
 changes, so its Marketplace copy can be behind.
 
+## 0.3.29
+
+- **The VS Code extension's Stop service row says what your service really
+  does.** It now follows the version of the atdesk service installed on that
+  computer. From 0.3.26 on a Mac and 0.3.25 on Windows it says the service
+  stays stopped, across logins too, until you start it again. With an older
+  service it says the service starts again at your next login on a Mac, or
+  within a minute on Windows, and to update atdesk so that a stop holds. The
+  update itself starts a stopped service again, so stop it once more afterwards
+  if you want it off.
+- **The two messages that tell you to run `atdesk update` now give a version,**
+  as in `atdesk update 0.3.29`: without one, it only prints how to use it.
+- **The extension's page says what matters first, and its privacy section is
+  now true.** At its usual width, VS Code's Extensions view shows only about
+  the first thirty characters of an extension's description, so atdesk's now
+  opens with the price and that it installs a service. The extension's page, on
+  the Marketplace and in VS Code, said there was no account and no password and
+  no third-party scripts on our site, and listed less than we hold. It now says
+  atdesk itself has no account or password, while the free Kanban board that
+  comes with a subscription, at kanban.atdesk.io, has both if you make one;
+  lists what we hold for each computer, and that we hold a hash of your
+  subscription id; names the one small script Cloudflare adds to atdesk.io; and
+  points to the privacy notice for the rest.
+- **A consult reaches a conversation whose turn has finished.** When the
+  /atdesk-consult or /atdesk-handover skill sends a message to another
+  conversation on this computer (`atdesk ask-session --send`), and all Claude
+  Code wrote after that conversation's last turn is a background task's notice
+  that starts no turn (newer Claude Code versions write some this way), the
+  message now goes in. Before, it was left in that conversation's message box
+  until someone pressed Enter at the computer. It now also refuses a
+  conversation where a message someone typed there has not gone in yet, since a
+  turn is about to start, and its refusal says the send could land in a turn
+  that is running or about to start. As before, a refused send is left in that
+  conversation's message box for you to send or clear.
+- **Corrections to earlier notes.** 0.3.27 said its Stop service row says the
+  service stays stopped once `atdesk update` has run. The row said so as soon
+  as the extension updated, and it was true only with a service of 0.3.26 or
+  later on a Mac, or 0.3.25 or later on Windows: before that, a stopped service
+  came back at the next login on a Mac and within a minute on Windows. 0.3.27's
+  "The README lists four things setup leaves to you" meant the README that
+  comes with the service, in its install folder, not the extension's page on
+  the Marketplace. And 0.3.25 said the VS Code extension was unchanged, but one
+  line of its README had changed, to say there is nothing to download from the
+  App Store; the Marketplace copy took that line in 0.3.27.
+- **Updating:** run `atdesk update 0.3.29` in a terminal, on a Mac and on
+  Windows. If you had stopped the service with `atdesk stop`, the update starts
+  it again; stop it once more and it stays stopped, across logins too. If you
+  have the atdesk skills installed and are on 0.3.24 or older, run `atdesk
+  skills` once afterwards; from 0.3.25 the update keeps them current. The VS
+  Code extension changes too: a copy installed from the Marketplace updates to
+  0.3.29 by itself, whether or not you have run the update. If atdesk linked
+  the extension for you, reload the VS Code window after the update to load it.
+
+## 0.3.28
+
+- **Claude can run one command as root on your Mac, with your yes and your
+  password.** With the atdesk skills installed, `atdesk sudo -- <command>` runs
+  one command as root, in `/`, so Claude names every file by its full path.
+  Claude Code asks you first, showing the command, with auto mode on too. Then
+  macOS opens its own password box on the Mac, which on macOS 27 names no
+  command, only "a script started by node", and your password goes only to
+  macOS. One box comes within seconds of your yes; a box at any other time is
+  not atdesk's, so press Don't Allow. The password is typed at the Mac: you can
+  approve from your phone, but with nobody at the Mac the box closes after 100
+  seconds and nothing runs. A command that fails shows its error output and
+  status, not its other output. A command over 200 characters, or holding a
+  tab, a line break, an invisible character or two spaces in a row, is refused,
+  so the prompt shows exactly what runs. The new atdesk-sudo skill tells Claude
+  to warn you first and to wait if you are away. macOS only: elsewhere
+  `atdesk sudo` refuses, though the skill is installed with the others.
+- **The consult gate guards it.** The consult gate, the hook `atdesk skills`
+  registers, refuses every other spelling of `atdesk sudo` it recognises
+  (though not a command built in pieces or run from a script), and any command
+  that names atdesk or vsr together with the word sudo, a search or a commit
+  message included: Claude writes those another way. Your own `sudo` is left
+  alone in a command that names neither. `atdesk sudo` refuses while your own
+  or the project's Claude Code settings switch hooks off.
+- **Your own phones get back in when your computer's connections are full.**
+  atdesk on your computer now tells the relay, as each paired phone's handshake
+  completes, that the connection is yours. So when one stranger who has seen
+  your pairing QR or install line keeps your computer's eight connections full,
+  the relay ends one of theirs rather than a phone already connected.
+- **Updating:** run `atdesk update 0.3.28`, on a Mac and on Windows. The
+  version is required: the notes for 0.3.24 to 0.3.27 said `atdesk update`
+  alone, which only prints how to use it. If you have the atdesk skills
+  installed and are on 0.3.25 or later, the update adds the atdesk-sudo skill
+  too; from 0.3.24 or older, run `atdesk skills` once afterwards. The VS Code
+  extension is unchanged, so the Marketplace stays at 0.3.27.
+
 ## 0.3.27
 
 - **A workflow waiting for your approval stays on your phone.** While one of a
